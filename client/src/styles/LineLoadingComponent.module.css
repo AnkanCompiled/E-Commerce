@@ -1,37 +1,34 @@
-.page_loader_container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.page_loader {
+.line_loader {
   display: flex;
   --height-of-loader: 5px;
   --loader-color: #0071e2;
   width: 100%;
   height: var(--height-of-loader);
   position: relative;
+  overflow: hidden;
+  background: rgba(0, 113, 226, 0.2);
 }
 
-.page_loader::before {
+.line_loader::before {
   content: "";
   position: absolute;
   background: var(--loader-color);
   top: 0;
-  left: 0;
-  width: 0%;
+  left: -100%;
+  width: 100%;
   height: 100%;
-  animation: moving 1s ease-in-out infinite;
+  animation: moving 1.5s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes moving {
-  50% {
-    width: 100%;
+  0% {
+    left: -100%;
   }
-
+  50% {
+    left: 0;
+  }
   100% {
-    width: 0;
-    right: 0;
-    left: unset;
+    left: 100%;
   }
 }

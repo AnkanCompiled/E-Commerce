@@ -1,13 +1,13 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoadingComponent from "../components/LoadingComponent";
+import LineLoadingComponent from "../components/LineLoadingComponent";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 
 export default function MapRoutes() {
   return (
     <Router>
-      <Suspense fallback={<LoadingComponent />}>
+      <Suspense fallback={<LineLoadingComponent />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="*" element={<>404</>} />
