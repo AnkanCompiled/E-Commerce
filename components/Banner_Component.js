@@ -8,9 +8,9 @@ export default function Banner_Component() {
   const [currentBanner, setCurrentBanner] = React.useState(0);
   const bannerInterval = React.useRef(null);
   const banners = [
-    "https://images.pexels.com/photos/9836581/pexels-photo-9836581.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1",
-    "https://images.pexels.com/photos/28354681/pexels-photo-28354681/free-photo-of-a-man-in-a-hat-and-white-pants-standing-on-a-beach.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1",
-    "https://images.pexels.com/photos/8879825/pexels-photo-8879825.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1",
+    "https://images.pexels.com/photos/9836581/pexels-photo-9836581.jpeg",
+    "https://images.pexels.com/photos/28354681/pexels-photo-28354681/free-photo-of-a-man-in-a-hat-and-white-pants-standing-on-a-beach.jpeg",
+    "https://images.pexels.com/photos/8879825/pexels-photo-8879825.jpeg",
   ];
   const startBannerInterval = () => {
     bannerInterval.current = setInterval(() => {
@@ -26,7 +26,7 @@ export default function Banner_Component() {
     return clearBannerInterval;
   }, []);
   return (
-    <div className="group relative h-[270px] sm:h-[360px] lg:h-[540px] xl:h-[720px]">
+    <div className="group relative h-[270px] sm:h-[360px] lg:h-[540px]">
       {/* Images */}
       {banners.map((banner, index) => (
         <div

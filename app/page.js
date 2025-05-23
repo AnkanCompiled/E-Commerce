@@ -1,6 +1,9 @@
+"use client";
 import { ArrowDown_Asset } from "@/assets";
 import Banner_Component from "@/components/Banner_Component";
+import BestSelling_Component from "@/components/BestSelling_Component";
 import Link from "next/link";
+import React from "react";
 
 export default function page() {
   return (
@@ -22,6 +25,9 @@ export default function page() {
 
       {/* Banner */}
       <Banner_Component />
+
+      {/*Best Selling Section */}
+      <BestSelling_Component />
     </>
   );
 }
