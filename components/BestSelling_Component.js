@@ -8,7 +8,7 @@ export default function BestSelling_Component() {
         <h2 className="mx-[20vw] text-xl/relaxed sm:text-3xl/relaxed font-light">
           Best Selling Fashion
         </h2>
-        <p className="mx-[20vw] text-gray-600 text-xs sm:text-md">
+        <p className="mx-[25vw] text-gray-600 text-xs sm:text-md">
           Discover our top-rated fashion, loved by thousands of customers.
         </p>
         {Array.from({ length: 2 }).map((_, index) => (
