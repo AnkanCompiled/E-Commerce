@@ -1,47 +1,31 @@
 import { NextResponse } from "next/server";
 import { insertUserService, registerUser } from "@/services/userService";
 import { createToken } from "@/utils/jwt";
+import { setHTTPOnlyCookie } from "@/utils/cookie";
+import { hashPassword } from "@/utils/pass";
 
 export async function POST(req) {
   try {
-    const body = await req.json();
+    const { name, email, number, password } = await req.json();
+
+    const hashedPassword = await hashPassword(password);
 
     const result = await insertUserService({
-      email: body.email,
-      name: body.name,
-      password: body.password,
-      gender_id: body.gender_id,
-      phone_number: body.phone_number,
-      avatar_url: body.avatar_url,
-      dob: body.dob,
-      address: body.address,
+      email: email || null,
+      phone_number: number || null,
+      name: name,
+      password: hashedPassword,
     });
 
-    if (result.error) {
-      return NextResponse.json({ error: result.error }, { status: 400 });
-    }
-
     const accessToken = createToken({ id: result.id }, { expiresIn: "15m" });
-
     const refreshToken = createToken({ id: result.id }, { expiresIn: "30d" });
 
     const res = NextResponse.json(
       { message: "User registered successfully." },
       { status: 201 }
     );
-    res.cookies.set("ACCESS_TOKEN", accessToken, {
-      httpOnly: true,
-      sameSite: "Lax",
-      path: "/",
-      maxAge: 60 * 15, // 15 minutes
-    });
-    res.cookies.set("REFRESH_TOKEN", refreshToken, {
-      httpOnly: true,
-      sameSite: "Strict",
-      path: "/api/refresh",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-    });
-
+    setHTTPOnlyCookie(res, "REFRESH_TOKEN", refreshToken);
+    setHTTPOnlyCookie(res, "ACCESS_TOKEN", accessToken);
     return res;
   } catch (error) {
     console.error("API registration error:", error);

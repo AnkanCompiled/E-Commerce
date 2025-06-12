@@ -1,10 +1,22 @@
-import { Profile_Asset, Search_Asset, Shopping_Asset } from "@/assets";
+"use client";
+import { useAuth } from "@/app/context/authContext";
+import {
+  Profile_Asset,
+  Search_Asset,
+  Shopping_Asset,
+  ArrowDown_Asset,
+} from "@/assets";
 import Link from "next/link";
 import React from "react";
 
 export default function Navbar_Component() {
+  const { userID, logout } = useAuth();
+  const navButton = {
+    profile: <Profile_Asset size="32px" color="#444" />,
+    cart: <Shopping_Asset size="32px" color="#444" />,
+  };
   return (
-    <nav className="grid grid-cols-[1fr_2fr_1fr] h-[60px]">
+    <nav className="sticky top-0 left-0 bg-white shadow-sm z-10 grid grid-cols-[1fr_2fr_1fr] h-[60px]">
       <div className="flex justify-center items-center mx-2">
         <Link
           href={"/"}
@@ -13,6 +25,7 @@ export default function Navbar_Component() {
           fashion
         </Link>
       </div>
+      {/* Search Area */}
       <div className="flex justify-center items-center mx-2">
         <div className="group w-full lg:w-2/3 space-x-4 px-4 flex items-center rounded-xl border-[1px] border-[#ccc] bg-[#eee] focus-within:bg-white hover:border-[#aaa] duration-200">
           <Search_Asset color="#aaa" size="24px" />
@@ -24,23 +37,81 @@ export default function Navbar_Component() {
         </div>
       </div>
       <div className="flex items-center justify-center mr-2">
-        {Object.entries({
-          profile: <Profile_Asset />,
-          cart: <Shopping_Asset />,
-        }).map(([key, value], index) => (
-          <div className="group relative h-full" key={index}>
-            <Link
-              className="w-[50px] flex items-center justify-center h-full after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0 after:bg-neutral-700 hover:after:h-[5px] after:transition-all after:duration-200"
-              href={key}
-            >
-              {value}
-            </Link>
-            {/* Profile and Cart Drop down */}
-            {/* <div className="absolute hidden lg:group-hover:flex z-10 -right-10 rounded-2xl top-[calc(100%+5px)] bg-[var(--background)] border-4 border-neutral-600 shadow-xl h-[300px] w-[300px] justify-center items-center text-3xl text-neutral-600">
-              {key}
-            </div> */}
-          </div>
-        ))}
+        {/* Nav Button */}
+        {userID !== null
+          ? Object.entries(navButton).map(([key, value], index) => (
+              <div className="group relative h-full space-x-4" key={index}>
+                <Link
+                  className="group flex items-center justify-center gap-1 h-full"
+                  href={`/${key}`}
+                >
+                  <span>{value}</span>
+                  <span
+                    className={`${
+                      key !== "profile"
+                        ? "hidden lg:block"
+                        : userID === "" && "animate-pulse"
+                    } text-lg lg:font-semibold text-[#444]`}
+                  >
+                    {key === "profile" && userID === ""
+                      ? "Login"
+                      : key[0].toUpperCase() + key.slice(1)}
+                  </span>
+                  {key === "profile" && (
+                    <div className="hidden lg:block transition-transform duration-700 group-hover:rotate-[180deg] -ml-1">
+                      <ArrowDown_Asset />
+                    </div>
+                  )}
+                </Link>
+                {/* Drop down */}
+                {key === "profile" && (
+                  <div className="absolute hidden lg:group-hover:flex flex-col z-10 left-1/2 -translate-x-1/2 rounded-md top-full bg-[var(--background)] border-2 border-neutral-600 shadow-xl w-[200px]">
+                    {userID !== "" ? (
+                      <>
+                        {Object.entries({
+                          "/profile": "My Profile",
+                          "/orders": "Orders",
+                          "/wishlists": "Wishlists",
+                        }).map(([key, value], index) => (
+                          <Link
+                            href={key}
+                            key={index}
+                            className="p-2 hover:bg-neutral-300 text-neutral-800 text-sm"
+                          >
+                            {value}
+                          </Link>
+                        ))}
+                        <div className="bg-neutral-500 h-[2px] rounded-xl"></div>
+                        <div className="p-2">
+                          <button
+                            onClick={logout}
+                            className="w-full rounded-md font-semibold p-2 text-white bg-neutral-400 hover:bg-neutral-500 duration-200 cursor-pointer"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex items-center p-2 gap-2">
+                        <span className="text-sm">New Customer?</span>
+                        <Link
+                          href={"/auth/register"}
+                          className="border-2 flex items-center justify-center border-neutral-700 p-2 rounded-xl w-full hover:bg-neutral-100 duration-200"
+                        >
+                          Sign Up
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))
+          : Object.entries(navButton).map((_, index) => (
+              <div
+                key={index}
+                className="w-[32px] h-[32px] bg-neutral-300 rounded-xl animate-pulse mx-2"
+              ></div>
+            ))}
       </div>
     </nav>
   );

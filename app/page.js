@@ -2,25 +2,32 @@
 import { ArrowDown_Asset } from "@/assets";
 import Banner_Component from "@/components/Banner_Component";
 import BestSelling_Component from "@/components/BestSelling_Component";
-import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function page() {
+  const [menuItem, setMenuItem] = useState(null);
+  const menuItems = ["men", "women", "new", "sale"];
   return (
     <>
-      {/* Navbar */}
       <div className="flex justify-evenly lg:justify-center bg-neutral-700 h-[40px]">
-        {["men", "women", "new", "sale"].map((item, index) => (
-          <Link
+        {menuItems.map((item, index) => (
+          <button
             key={index}
-            href={item}
-            className="flex items-center justify-center h-full lg:w-[100px] hover:bg-neutral-600 duration-200"
+            onClick={() => setMenuItem(item)}
+            className="flex items-center justify-center h-full lg:w-[100px] hover:bg-neutral-600 duration-200 cursor-pointer"
           >
             <span className="flex gap-2 items-center px-2 text-white font-mono text-sm uppercase">
               {item} <ArrowDown_Asset color="#fff" size="20px" />
             </span>
-          </Link>
+          </button>
         ))}
+      </div>
+      <div
+        className={`${
+          menuItem === null ? "translate-y-full" : "translate-y-0"
+        } bg-white duration-150`}
+      >
+        {menuItem}
       </div>
 
       {/* Banner */}
