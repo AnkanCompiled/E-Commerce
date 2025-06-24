@@ -12,7 +12,15 @@ export async function POST(req) {
       );
     }
     const data = verifyToken(refreshToken);
-    const accessToken = createToken({ id: data.id }, { expiresIn: "15m" });
+    const accessToken = createToken(
+      {
+        userId: data.userId,
+        userName: data.userName,
+        userAvatar: data.userAvatar,
+        emailVerified: data.emailVerified,
+      },
+      { expiresIn: "15m" }
+    );
 
     const res = NextResponse.json({ message: "Token refreshed" });
     setHTTPOnlyCookie(res, "ACCESS_TOKEN", accessToken);

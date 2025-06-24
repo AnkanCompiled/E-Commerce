@@ -1,6 +1,5 @@
 "use client";
-import AuthComponent from "@/components/AuthComponent";
-import { api } from "@/configs/axios";
+import Auth_Component from "@/components/Auth_Component";
 import Link from "next/link";
 import React from "react";
 
@@ -17,7 +16,7 @@ export default function Register() {
           </span>
         </div>
         <div className="flex-1 bg-neutral-200 m-2 p-5 space-y-6 rounded-lg">
-          <AuthComponent type={"register"} />
+          <Auth_Component type={"register"} />
           <Link
             href={"/auth/login"}
             className="underline block text-center"

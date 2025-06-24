@@ -6,7 +6,7 @@ export async function insertUserService(data) {
       .from("users")
       .insert([data])
       .select("*")
-      .single();
+      .maybeSingle();
 
     if (error) {
       throw error;
@@ -24,7 +24,7 @@ export async function findUserService(data) {
       .from("users")
       .select("*")
       .eq(data.type, data.value)
-      .single();
+      .maybeSingle();
 
     if (error) {
       throw error;

@@ -7,14 +7,15 @@ const AuthContext = createContext();
 import React from "react";
 
 export default function AuthProvider({ children }) {
-  const [userID, setUserID] = useState(null);
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
         const result = await api.get("/api/auth/logged");
-        setUserID(result.data.id);
+        console.log("User ID:", result.data);
+        setUser(result.data);
       } catch (error) {
-        setUserID("");
+        setUser("");
       }
     };
     checkLoginStatus();
@@ -23,12 +24,12 @@ export default function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await api.get("/api/auth/logout");
-      setUserID("");
+      setUser("");
       window.location.reload();
     } catch (error) {}
   };
   return (
-    <AuthContext.Provider value={{ userID, logout }}>
+    <AuthContext.Provider value={{ user, logout }}>
       {children}
     </AuthContext.Provider>
   );

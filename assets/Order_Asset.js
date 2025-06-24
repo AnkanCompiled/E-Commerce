@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Shopping_Asset({ color = "#222222", size = "32px" }) {
+export default function Order_Asset({ color = "#222222", size = "32px" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

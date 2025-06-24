@@ -1,3 +1,4 @@
+import { findUserService } from "@/services/userService";
 import { verifyToken } from "@/utils/jwt";
 import { NextResponse } from "next/server";
 
@@ -11,7 +12,16 @@ export async function GET(req) {
       );
     }
     const data = verifyToken(accessToken);
-    return NextResponse.json(data, { status: 200 });
+    const user = await findUserService({
+      type: "id",
+      value: data.userId,
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: error.message || "Unexpected Error" },

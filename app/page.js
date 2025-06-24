@@ -2,6 +2,7 @@
 import { ArrowDown_Asset } from "@/assets";
 import Banner_Component from "@/components/Banner_Component";
 import BestSelling_Component from "@/components/BestSelling_Component";
+import Footer_Component from "@/components/Footer_Component";
 import React, { useState } from "react";
 
 export default function page() {
@@ -35,6 +36,7 @@ export default function page() {
 
       {/*Best Selling Section */}
       <BestSelling_Component />
+      <Footer_Component />
     </>
   );
 }

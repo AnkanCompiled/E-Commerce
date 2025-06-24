@@ -1,9 +1,11 @@
 export { default as ArrowDown_Asset } from "./ArrowDown_Asset";
+export { default as Cart_Asset } from "./Cart_Asset";
+export { default as Favorite_Asset } from "./Favorite_Asset";
 export { default as GoogleLogo_Asset } from "./GoogleLogo_Asset";
 export { default as Menu_Asset } from "./Menu_Asset";
 export { default as NorthEast_Asset } from "./NorthEast_Asset";
+export { default as Order_Asset } from "./Order_Asset";
 export { default as Profile_Asset } from "./Profile_Asset";
 export { default as Search_Asset } from "./Search_Asset";
-export { default as Shopping_Asset } from "./Shopping_Asset";
 export { default as VisibleOff_Asset } from "./VisibleOff_Asset";
 export { default as Visible_Asset } from "./Visible_Asset";

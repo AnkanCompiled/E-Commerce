@@ -4,8 +4,9 @@ import { api } from "@/configs/axios";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
-export default function AuthComponent({ type, onSubmit }) {
+export default function Auth_Component({ type }) {
   const {
     register,
     handleSubmit,
@@ -14,13 +15,6 @@ export default function AuthComponent({ type, onSubmit }) {
     formState: { errors, isSubmitting },
   } = useForm();
   const [passwordVisible, setPasswordVisible] = useState(false);
-
-  const clearAllErrors = () => {
-    clearErrors("name");
-    clearErrors("email");
-    clearErrors("password");
-    clearErrors("global");
-  };
 
   const handleRegister = async (data) => {
     try {
@@ -49,10 +43,15 @@ export default function AuthComponent({ type, onSubmit }) {
       });
     }
   };
-  const handleGoogleSignIn = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  const handleGoogleSignIn = async () => {
+    // try {
+    //   await signIn("google");
+    //   await api.get("/api/auth/login");
+    //   window.location.reload();
+    // } catch (error) {
+    //   console.error("Google sign-in error:", error);
+    // }
   };
-
   return (
     <div className="space-y-6">
       <form
@@ -77,6 +76,7 @@ export default function AuthComponent({ type, onSubmit }) {
           <input
             type="email"
             {...register("email", { required: "Email is required" })}
+            onChange={() => clearErrors("global")}
             className="w-full px-4 py-2 border rounded-md"
           />
           {errors.email && (
@@ -89,7 +89,27 @@ export default function AuthComponent({ type, onSubmit }) {
           <div className="w-full flex border rounded-md">
             <input
               type={passwordVisible ? "text" : "password"}
-              {...register("password", { required: "Password is required" })}
+              {...register("password", {
+                required: "Password is required",
+                ...(type === "register" && {
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                  validate: {
+                    uppercase: (v) =>
+                      /[A-Z]/.test(v) ||
+                      "At least one uppercase letter required",
+                    lowercase: (v) =>
+                      /[a-z]/.test(v) ||
+                      "At least one lowercase letter required",
+                    specialChar: (v) =>
+                      /[^A-Za-z0-9]/.test(v) ||
+                      "At least one special character required",
+                  },
+                }),
+              })}
+              onChange={() => clearErrors("global")}
               className="w-full px-4 py-2 rounded-md focus:outline-0"
             />
             <button

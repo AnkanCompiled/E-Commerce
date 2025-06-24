@@ -10,15 +10,22 @@ export async function POST(req) {
 
     const hashedPassword = await hashPassword(password);
 
-    const result = await insertUserService({
+    const user = await insertUserService({
       email: email || null,
       phone_number: number || null,
       name: name,
       password: hashedPassword,
     });
 
-    const accessToken = createToken({ id: result.id }, { expiresIn: "15m" });
-    const refreshToken = createToken({ id: result.id }, { expiresIn: "30d" });
+    const tokenData = {
+      userId: user.id,
+      userName: user.name,
+      userAvatar: user.avatar_url,
+      emailVerified: user.email_verified,
+    };
+
+    const refreshToken = createToken(tokenData, { expiresIn: "30d" });
+    const accessToken = createToken(tokenData, { expiresIn: "15m" });
 
     const res = NextResponse.json(
       { message: "User registered successfully." },
