@@ -25,7 +25,7 @@ export async function generateMetadata({ searchParams }) {
   };
 }
 
-export default async function ProfilePage({ searchParams }) {
+export default async function Profile({ searchParams }) {
   const params = await searchParams;
   const type = params.type || "my_profile";
   const SelectedComponent = content[type]?.Component;

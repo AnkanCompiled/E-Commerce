@@ -5,7 +5,7 @@ import BestSelling_Component from "@/components/BestSelling_Component";
 import Footer_Component from "@/components/Footer_Component";
 import React, { useState } from "react";
 
-export default function page() {
+export default function Home() {
   const [menuItem, setMenuItem] = useState(null);
   const menuItems = ["men", "women", "new", "sale"];
   return (

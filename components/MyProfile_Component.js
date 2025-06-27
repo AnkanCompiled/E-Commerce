@@ -1,5 +1,6 @@
 "use client";
-import { useAuth } from "@/app/context/authContext";
+import { useAuth } from "@/context/authContext";
+import { Logout_Asset } from "@/assets";
 import { api } from "@/configs/axios";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -103,7 +104,7 @@ export default function MyProfile_Component() {
             {field.key === "email" &&
               edited === false &&
               userData.email_verified === false && (
-                <p className="uppercase bg-emerald-400 text-white font-semibold w-max px-4 py-2 rounded-lg mt-2 shadow-lg hover:bg-emerald-500 duration-200 cursor-pointer">
+                <p className="uppercase text-emerald-600 border-b-2 border-emerald-600 font-semibold w-max mt-2 opacity-80 hover:opacity-100 duration-200 cursor-pointer">
                   Verify Email
                 </p>
               )}
@@ -134,8 +135,9 @@ export default function MyProfile_Component() {
       <div className="flex flex-col justify-baseline items-baseline gap-2">
         <button
           onClick={logout}
-          className="cursor-pointer font-semibold bg-neutral-700 text-white hover:bg-neutral-600 rounded-lg py-2 px-6 duration-200"
+          className="flex gap-1 items-center cursor-pointer font-semibold bg-neutral-700 text-white hover:bg-neutral-600 rounded-lg py-2 px-6 duration-200"
         >
+          <Logout_Asset color="#fff" size="24px" />
           Logout
         </button>
         <button className="cursor-pointer text-md text-rose-600">

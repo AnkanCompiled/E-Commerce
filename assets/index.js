@@ -2,6 +2,7 @@ export { default as ArrowDown_Asset } from "./ArrowDown_Asset";
 export { default as Cart_Asset } from "./Cart_Asset";
 export { default as Favorite_Asset } from "./Favorite_Asset";
 export { default as GoogleLogo_Asset } from "./GoogleLogo_Asset";
+export { default as Logout_Asset } from "./Logout_Asset";
 export { default as Menu_Asset } from "./Menu_Asset";
 export { default as NorthEast_Asset } from "./NorthEast_Asset";
 export { default as Order_Asset } from "./Order_Asset";

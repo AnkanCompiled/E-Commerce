@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/app/context/authContext";
+import { useAuth } from "@/context/authContext";
 import {
   Profile_Asset,
   Search_Asset,
