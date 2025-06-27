@@ -58,7 +58,7 @@ export default function Navbar_Component() {
                         user !== "" ? (
                           <p>{user?.userName?.split(" ")[0]}</p>
                         ) : (
-                          "Sign In"
+                          "Login"
                         )
                       ) : (
                         key.charAt(0).toUpperCase() + key.slice(1)
@@ -120,7 +120,7 @@ export default function Navbar_Component() {
               ))}
         </div>
       </nav>
-      {!user?.emailVerified && (
+      {user !== "" && !user?.emailVerified && (
         <div className="fixed bottom-0 left-0 w-screen p-2 bg-neutral-700 flex justify-center gap-2 border-t-[1px] border-neutral-300">
           <span className="text-white lg:text-xl font-extralight">
             Email not verified.
