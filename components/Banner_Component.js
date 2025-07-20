@@ -1,5 +1,5 @@
 "use client";
-import { ArrowDown_Asset, NorthEast_Asset } from "@/assets";
+import { MoveUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -64,7 +64,7 @@ export default function Banner_Component() {
             <span className="text-xl text-neutral-700 font-semibold uppercase">
               shop the collection
             </span>
-            <NorthEast_Asset color="#222" size="20px" />
+            <MoveUpRight />
           </Link>
         </div>
       </div>

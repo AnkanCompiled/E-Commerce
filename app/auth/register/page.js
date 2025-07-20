@@ -1,12 +1,16 @@
-"use client";
 import Auth_Component from "@/components/Auth_Component";
 import Link from "next/link";
 import React from "react";
 
+export const metadata = {
+  title: "Register Page - Fashion Store",
+  description: "Create a new account to start shopping.",
+};
+
 export default function Register() {
   return (
     <div className="flex flex-col items-center h-[calc(100vh-60px)] bg-gradient-to-br from-neutral-700 to-neutral-500">
-      <div className="w-full md:w-[70vw] xl:w-[40vw] h-full my-10 flex flex-col rounded-lg bg-white">
+      <div className="w-full md:w-[70vw] xl:w-[40vw] my-10 flex flex-col rounded-lg bg-white">
         <div className="space-y-3.5 p-5 mx-auto lg:mx-0">
           <h2 className="text-3xl/normal font-semibold">
             {"Looks like you're new here!"}

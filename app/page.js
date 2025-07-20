@@ -1,8 +1,8 @@
 "use client";
-import { ArrowDown_Asset } from "@/assets";
 import Banner_Component from "@/components/Banner_Component";
 import BestSelling_Component from "@/components/BestSelling_Component";
 import Footer_Component from "@/components/Footer_Component";
+import { ChevronDown } from "lucide-react";
 import React, { useState } from "react";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
             className="flex items-center justify-center h-full lg:w-[100px] hover:bg-neutral-600 duration-200 cursor-pointer"
           >
             <span className="flex gap-2 items-center px-2 text-white font-mono text-sm uppercase">
-              {item} <ArrowDown_Asset color="#fff" size="20px" />
+              {item} <ChevronDown />
             </span>
           </button>
         ))}

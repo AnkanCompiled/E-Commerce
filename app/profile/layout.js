@@ -1,7 +1,7 @@
 import React from "react";
-import { Profile_Asset, Order_Asset, Favorite_Asset } from "@/assets";
 import Link from "next/link";
 import NavLink from "@/components/NavLink";
+import { Heart, ShoppingBag, User } from "lucide-react";
 
 export const metadata = {
   title: "Profile Page",
@@ -12,15 +12,15 @@ export default function ProfileLayout({ children }) {
   const content = {
     my_profile: {
       name: "Profile",
-      icon: <Profile_Asset size="24px" />,
+      icon: <User />,
     },
     orders: {
       name: "Orders",
-      icon: <Order_Asset size="24px" />,
+      icon: <ShoppingBag />,
     },
     wishlists: {
       name: "Wishlists",
-      icon: <Favorite_Asset size="24px" />,
+      icon: <Heart />,
     },
   };
 

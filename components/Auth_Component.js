@@ -1,10 +1,11 @@
 "use client";
-import { GoogleLogo_Asset, VisibleOff_Asset, Visible_Asset } from "@/assets";
+
+import GoogleLogo_Asset from "@/assets/GoogleLogo_Asset";
 import { api } from "@/configs/axios";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
 
 export default function Auth_Component({ type }) {
   const {
@@ -14,55 +15,59 @@ export default function Auth_Component({ type }) {
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm();
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handleRegister = async (data) => {
+  const onSubmit = async (data) => {
     try {
-      await api.post("/api/auth/register", data);
+      const url = type === "login" ? "/api/auth/login" : "/api/auth/register";
+      await api.post(url, data);
       window.location.reload();
     } catch (error) {
       const message =
-        error?.response?.data?.message || "Registration failed. Try again.";
-      setError("global", {
+        error?.response?.data?.message || "Something went wrong. Try again.";
+      setError("root", {
         type: "manual",
         message,
       });
     }
   };
 
-  const handleLogin = async (data) => {
-    try {
-      await api.post("/api/auth/login", data);
-      window.location.reload();
-    } catch (error) {
-      const message =
-        error?.response?.data?.message || "Invalid email or password";
-      setError("global", {
-        type: "manual",
-        message,
-      });
-    }
-  };
   const handleGoogleSignIn = async () => {
-    // try {
-    //   await signIn("google");
-    //   await api.get("/api/auth/login");
-    //   window.location.reload();
-    // } catch (error) {
-    //   console.error("Google sign-in error:", error);
-    // }
+    // Add Google sign-in logic here if needed
+    console.log("Google sign-in not implemented yet.");
   };
+
   return (
     <div className="space-y-6">
-      <form
-        onSubmit={handleSubmit(type === "login" ? handleLogin : handleRegister)}
-        className="space-y-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {type !== "login" && (
           <div>
-            <label className="block text-sm font-medium">Name</label>
+            <label htmlFor="name" className="block text-sm font-medium">
+              Name
+            </label>
             <input
-              {...register("name", { required: "Name is required" })}
+              id="name"
+              name="name"
+              autoComplete="name"
+              {...register("name", {
+                required: "Name is required",
+                minLength: {
+                  value: 2,
+                  message: "Name must be at least 2 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Name cannot exceed 50 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-z\s]+$/,
+                  message: "Name can only contain letters and spaces",
+                },
+                validate: (value) =>
+                  value.trim() !== "" || "Name cannot be just spaces",
+              })}
+              onFocus={() => clearErrors("root")}
               className="w-full px-4 py-2 border rounded-md"
             />
             {errors.name && (
@@ -72,11 +77,16 @@ export default function Auth_Component({ type }) {
         )}
 
         <div>
-          <label className="block text-sm font-medium">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium">
+            Email
+          </label>
           <input
+            id="email"
+            name="email"
             type="email"
+            autoComplete="email"
             {...register("email", { required: "Email is required" })}
-            onChange={() => clearErrors("global")}
+            onFocus={() => clearErrors("root")}
             className="w-full px-4 py-2 border rounded-md"
           />
           {errors.email && (
@@ -85,31 +95,43 @@ export default function Auth_Component({ type }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Password</label>
+          <label htmlFor="password" className="block text-sm font-medium">
+            Password
+          </label>
           <div className="w-full flex border rounded-md">
             <input
+              id="password"
+              name="password"
               type={passwordVisible ? "text" : "password"}
-              {...register("password", {
-                required: "Password is required",
-                ...(type === "register" && {
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                  validate: {
-                    uppercase: (v) =>
-                      /[A-Z]/.test(v) ||
-                      "At least one uppercase letter required",
-                    lowercase: (v) =>
-                      /[a-z]/.test(v) ||
-                      "At least one lowercase letter required",
-                    specialChar: (v) =>
-                      /[^A-Za-z0-9]/.test(v) ||
-                      "At least one special character required",
-                  },
-                }),
-              })}
-              onChange={() => clearErrors("global")}
+              autoComplete={
+                type === "login" ? "current-password" : "new-password"
+              }
+              {...register(
+                "password",
+                type === "register"
+                  ? {
+                      required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                      validate: {
+                        uppercase: (v) =>
+                          /[A-Z]/.test(v) ||
+                          "At least one uppercase letter required",
+                        lowercase: (v) =>
+                          /[a-z]/.test(v) ||
+                          "At least one lowercase letter required",
+                        specialChar: (v) =>
+                          /[^A-Za-z0-9]/.test(v) ||
+                          "At least one special character required",
+                      },
+                    }
+                  : {
+                      required: "Password is required",
+                    }
+              )}
+              onFocus={() => clearErrors("root")}
               className="w-full px-4 py-2 rounded-md focus:outline-0"
             />
             <button
@@ -117,11 +139,7 @@ export default function Auth_Component({ type }) {
               className="hover:scale-105 duration-100 px-3 cursor-pointer"
               type="button"
             >
-              {passwordVisible ? (
-                <VisibleOff_Asset size="28px" />
-              ) : (
-                <Visible_Asset size="28px" />
-              )}
+              {passwordVisible ? <EyeOff /> : <Eye />}
             </button>
           </div>
           {errors.password && (
@@ -141,8 +159,9 @@ export default function Auth_Component({ type }) {
             : "Sign Up"}
         </button>
       </form>
-      {errors.global && (
-        <p className="text-sm text-red-500">{errors.global.message}</p>
+
+      {errors.root && (
+        <p className="text-sm text-red-500">{errors.root.message}</p>
       )}
 
       <span className="text-xs">
@@ -163,7 +182,7 @@ export default function Auth_Component({ type }) {
         onClick={handleGoogleSignIn}
         className="w-full flex items-center justify-center gap-2 py-3 border rounded-md bg-white hover:bg-gray-100 duration-200"
       >
-        <GoogleLogo_Asset size={"24px"} />
+        <GoogleLogo_Asset size="24px" />
         Continue with Google
       </button>
     </div>
