@@ -1,5 +1,6 @@
 import React from "react";
 import ProductCard_Component from "@/components/ProductCard_Component";
+import HorizontalScroller from "./HorizontalScroller";
 
 export default function BestSelling_Component() {
   return (
@@ -20,18 +21,18 @@ export default function BestSelling_Component() {
           ></div>
         ))}
       </div>
-      <div className="flex justify-evenly space-x-4 py-4 mx-4 snap-x snap-mandatory scroll-smooth overflow-x-auto">
+      <HorizontalScroller>
         {[1, 2, 3, 4, 5].map((item, index) => (
           <div key={index} className="min-w-[360px] h-[432px] snap-start">
             <ProductCard_Component
               title={`Product ${item}`}
               price={item * 100}
-              discountType={"flat"}
+              discountType="flat"
               discountValue={50}
             />
           </div>
         ))}
-      </div>
+      </HorizontalScroller>
     </section>
   );
 }

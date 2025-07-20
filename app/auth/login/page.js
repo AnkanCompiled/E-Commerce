@@ -1,10 +1,15 @@
 import Auth_Component from "@/components/Auth_Component";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Login Page - Fashion Store",
+  description: "Sign in to your account to continue shopping.",
+};
+
 export default function Login() {
   return (
     <div className="flex flex-col items-center h-[calc(100vh-60px)] bg-gradient-to-bl from-neutral-700 to-neutral-500">
-      <div className="w-full md:w-[70vw] xl:w-[40vw] h-full my-10 flex flex-col rounded-lg bg-white">
+      <div className="w-full md:w-[70vw] xl:w-[40vw] my-10 flex flex-col rounded-lg bg-white">
         <div className="space-y-3.5 p-5 mx-auto lg:mx-0">
           <h2 className="text-3xl/normal font-semibold">Welcome Back!</h2>
           <span className="text-xl/normal">

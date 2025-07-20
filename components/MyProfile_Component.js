@@ -1,8 +1,8 @@
 "use client";
 import { useAuth } from "@/context/authContext";
-import { Logout_Asset } from "@/assets";
 import { api } from "@/configs/axios";
 import React, { useEffect, useRef, useState } from "react";
+import { LogOut } from "lucide-react";
 
 const LoadingTemplate = () => {
   return (
@@ -137,7 +137,7 @@ export default function MyProfile_Component() {
           onClick={logout}
           className="flex gap-1 items-center cursor-pointer font-semibold bg-neutral-700 text-white hover:bg-neutral-600 rounded-lg py-2 px-6 duration-200"
         >
-          <Logout_Asset color="#fff" size="24px" />
+          <LogOut />
           Logout
         </button>
         <button className="cursor-pointer text-md text-rose-600">
